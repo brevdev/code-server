@@ -453,3 +453,34 @@ describe("escapeHtml", () => {
     )
   })
 })
+
+describe("pathToFsPath", () => {
+  it("should convert a path to a file system path", () => {
+    expect(util.pathToFsPath("/foo/bar/baz")).toBe("/foo/bar/baz")
+  })
+  it("should lowercase drive letter casing by default", () => {
+    expect(util.pathToFsPath("/C:/far/boo")).toBe("c:/far/boo")
+  })
+  it("should keep drive letter casing when set to true", () => {
+    expect(util.pathToFsPath("/C:/far/bo", true)).toBe("C:/far/bo")
+  })
+  it("should throw an error if an array is passed in for path", () => {
+    // @ts-expect-error We need to make sure it throws when an array is passed in.
+    expect(() => util.pathToFsPath([])).toThrow(
+      `Could not computer fsPath from given uri. Expected path to be of type string, but was of type object.`,
+    )
+  })
+  it("should replace / with \\ on Windows", () => {
+    let ORIGINAL_PLATFORM = process.platform
+
+    Object.defineProperty(process, "platform", {
+      value: "win32",
+    })
+
+    expect(util.pathToFsPath("/C:/far/boo")).toBe("c:\\far\\boo")
+
+    Object.defineProperty(process, "platform", {
+      value: ORIGINAL_PLATFORM,
+    })
+  })
+})
