@@ -16,18 +16,14 @@ access it in the browser.
 
 ## Requirements
 
-For a good experience, we recommend at least:
+See [requirements](requirements.md) for minimum specs, as well as instructions
+on how to set up a Google VM on which you can install code-server.
 
-- 1 GB of RAM
-- 2 cores
-
-You can use any Linux distribution, but [our
-docs](https://coder.com/docs/code-server/v3.10.2/guide) assume that you're using
-Debian hosted by Google Cloud.
+**TL;DR:** Linux machine with WebSockets enabled, 1 GB RAM, and 2 CPUs
 
 ## Getting started
 
-There are three ways you can get started:
+There are three ways to get started:
 
 1. Using the [install
    script](https://github.com/cdr/code-server/blob/main/install.sh), which

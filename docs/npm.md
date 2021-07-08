@@ -2,23 +2,28 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # npm Install Requirements
 
-- [Ubuntu, Debian](#ubuntu-debian)
-- [Fedora, CentOS, RHEL](#fedora-centos-rhel)
-- [Alpine](#alpine)
-- [macOS](#macos)
-- [FreeBSD](#freebsd)
+- [npm Install Requirements](#npm-install-requirements)
+  - [Node.js version](#nodejs-version)
+  - [Ubuntu, Debian](#ubuntu-debian)
+  - [Fedora, CentOS, RHEL](#fedora-centos-rhel)
+  - [Alpine](#alpine)
+  - [macOS](#macos)
+  - [FreeBSD](#freebsd)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-If you're installing the npm module you'll need certain dependencies to build the native modules used by VS Code.
+If you're installing code-server via `npm`, you'll need to install additional
+dependencies required to build the native modules used by VS Code. This article
+includes installing instructions based on your operating system.
 
-- Node.js: version `= 14`. Other versions may work, but your mileage may vary.
+## Node.js version
 
-_Note: We use the same major version of Node.js that is shipped in VSCode's Electron. VS Code also lists Node.js requirements. See [here](https://github.com/microsoft/vscode/wiki/How-to-Contribute#prerequisites)._
+We use the same major version of Node.js shipped with VSCode's Electron,
+which is currently `14.x`. VS Code also [lists Node.js
+requirements](https://github.com/microsoft/vscode/wiki/How-to-Contribute#prerequisites).
 
-Related:
-
-- [#1633](https://github.com/cdr/code-server/issues/1633)
+Using other versions of Node.js [may lead to unexpected
+behavior](https://github.com/cdr/code-server/issues/1633).
 
 ## Ubuntu, Debian
 
