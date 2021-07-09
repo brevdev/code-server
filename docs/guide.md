@@ -10,7 +10,7 @@
     - [Using a self-signed certificate](#using-a-self-signed-certificate)
   - [External authentication](#external-authentication)
   - [HTTPS](#https)
-  - [Securely accessing development web services](#securely-accessing-development-web-services)
+    - [Self Signed Certificate](#self-signed-certificate)
     - [Using a subdomain](#using-a-subdomain)
     - [Using a subpath](#using-a-subpath)
     - [Stripping `/proxy/<port>` from the request path](#stripping-proxyport-from-the-request-path)
@@ -202,6 +202,10 @@ At this point, you should be able to access code-server via
 At this point, you should be able to access code-server via
 `https://mydomain.com`.
 
+> If you set `proxy_set_header Host $host;` in your reverse proxy config, it
+> will change the address displayed in the green section of code-server in the
+> bottom left to show the correct address.
+
 ### Using a self-signed certificate
 
 > Self signed certificates do not work with iPad; see [./ipad.md](./ipad.md) for
@@ -276,7 +280,7 @@ redirect all HTTP requests to HTTPS.
 > You can use [Let's Encrypt](https://letsencrypt.org/) to get a TLS certificate
 for free.
 
-## Securely accessing development web services
+### Self Signed Certificate
 
 If you're working on a web service and want to access it locally, code-server
 can proxy to any port using either a subdomain or a subpath, allowing you to

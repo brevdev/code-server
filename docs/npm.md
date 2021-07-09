@@ -9,6 +9,7 @@
   - [Alpine](#alpine)
   - [macOS](#macos)
   - [FreeBSD](#freebsd)
+  - [Issues with Node.js after version upgrades](#issues-with-nodejs-after-version-upgrades)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -63,3 +64,23 @@ xcode-select --install
 pkg install -y git python npm-node14 yarn-node14 pkgconf
 pkg install -y libinotify
 ```
+
+## Issues with Node.js after version upgrades
+
+Occasionally, you may run into issues with Node.js.
+
+If you install code-server using `yarn` or `npm`, and you upgrade your Node.js
+version, you may need to reinstall code-server to recompile native modules.
+Sometimes, you can get around this by navigating into code-server's `lib/vscode`
+directory and running `npm rebuild` to recompile the modules.
+
+A step-by-step example of how you might do this is:
+
+1. Install code-server: `brew install code-server`
+2. Navigate into the directory: `cd
+   /usr/local/Cellar/code-server/<version>/libexec/lib/vscode/`
+3. Recompile the native modules: `npm rebuild`
+4. Restart code-server
+
+If you need further assistance, post on our [GitHub Discussions
+page](https://github.com/cdr/code-server/discussions).
