@@ -2,17 +2,16 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # Maintaining
 
-- [Maintaining](#maintaining)
-  - [Workflow](#workflow)
-    - [Milestones](#milestones)
-    - [Triage](#triage)
-    - [Project boards](#project-boards)
-  - [Versioning](#versioning)
-  - [Pull requests](#pull-requests)
-    - [Merge strategies](#merge-strategies)
-    - [Changelog](#changelog)
-  - [Releases](#releases)
-    - [Publishing a release](#publishing-a-release)
+- [Workflow](#workflow)
+  - [Milestones](#milestones)
+  - [Triage](#triage)
+  - [Project boards](#project-boards)
+- [Versioning](#versioning)
+- [Pull requests](#pull-requests)
+  - [Merge strategies](#merge-strategies)
+  - [Changelog](#changelog)
+- [Releases](#releases)
+  - [Publishing a release](#publishing-a-release)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

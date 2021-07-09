@@ -1,20 +1,19 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-# Setup
+# Setup Guide
 
-- [Setup](#setup)
-  - [Expose code-server](#expose-code-server)
-    - [Port forwarding via SSH](#port-forwarding-via-ssh)
-    - [Using Let's Encrypt with Caddy](#using-lets-encrypt-with-caddy)
-    - [Using Let's Encrypt with NGINX](#using-lets-encrypt-with-nginx)
-    - [Using a self-signed certificate](#using-a-self-signed-certificate)
-  - [External authentication](#external-authentication)
-  - [HTTPS](#https)
-    - [Self Signed Certificate](#self-signed-certificate)
-    - [Using a subdomain](#using-a-subdomain)
-    - [Using a subpath](#using-a-subpath)
-    - [Stripping `/proxy/<port>` from the request path](#stripping-proxyport-from-the-request-path)
-    - [Proxying to create a React app](#proxying-to-create-a-react-app)
+- [Expose code-server](#expose-code-server)
+  - [Port forwarding via SSH](#port-forwarding-via-ssh)
+  - [Using Let's Encrypt with Caddy](#using-lets-encrypt-with-caddy)
+  - [Using Let's Encrypt with NGINX](#using-lets-encrypt-with-nginx)
+  - [Using a self-signed certificate](#using-a-self-signed-certificate)
+- [External authentication](#external-authentication)
+- [HTTPS](#https)
+  - [Self Signed Certificate](#self-signed-certificate)
+  - [Using a subdomain](#using-a-subdomain)
+  - [Using a subpath](#using-a-subpath)
+  - [Stripping `/proxy/<port>` from the request path](#stripping-proxyport-from-the-request-path)
+  - [Proxying to create a React app](#proxying-to-create-a-react-app)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -85,8 +84,8 @@ we recommend using another method, such as [Let's Encrypt](#let-encrypt) instead
    # This is the same as the above SSH command, but it runs in the background
    # continuously. Be sure to add `mutagen daemon start` to your ~/.bashrc to
    # start the mutagen daemon when you open a shell.
-
-   mutagen forward create --name=code-server tcp:127.0.0.1:8080 <instance-ip>:tcp:127.0.0.1:8080
+   
+   mutagen forward create --name=code-server tcp:127.0.0.1:8080 < instance-ip > :tcp:127.0.0.1:8080
    ```
 
 6. Optional, but highly recommended: add the following to `~/.ssh/config` so
@@ -111,19 +110,19 @@ access code-server on an iPad or do not want to use SSH port forwarding.
 1. This option requires that the remote machine be exposed to the internet. Make sure that your instance allows HTTP/HTTP traffic.
 
 1. You'll need a domain name (if you don't have one, you can purchase one from
-  [Google Domains](https://domains.google.com) or the domain service of your
-  choice)). Once you have a domain name, add an A record to your domain that contains your
-  instance's IP address.
+   [Google Domains](https://domains.google.com) or the domain service of your
+   choice)). Once you have a domain name, add an A record to your domain that contains your
+   instance's IP address.
 
 1. Install [Caddy](https://caddyserver.com/docs/download#debian-ubuntu-raspbian):
 
-  ```console
-  sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
-  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key' | sudo apt-key add -
-  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/cfg/setup/config.deb.txt?distro=debian&version=any-version' | sudo tee -a /etc/apt/sources.list.d/caddy-stable.list
-  sudo apt update
-  sudo apt install caddy
-  ```
+```console
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key' | sudo apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/cfg/setup/config.deb.txt?distro=debian&version=any-version' | sudo tee -a /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update
+sudo apt install caddy
+```
 
 1. Replace `/etc/caddy/Caddyfile` using `sudo` so that the file looks like this:
 
@@ -158,9 +157,9 @@ At this point, you should be able to access code-server via
 1. This option requires that the remote machine be exposed to the internet. Make sure that your instance allows HTTP/HTTP traffic.
 
 1. You'll need a domain name (if you don't have one, you can purchase one from
-  [Google Domains](https://domains.google.com) or the domain service of your
-  choice)). Once you have a domain name, add an A record to your domain that contains your
-  instance's IP address.
+   [Google Domains](https://domains.google.com) or the domain service of your
+   choice)). Once you have a domain name, add an A record to your domain that contains your
+   instance's IP address.
 
 1. Install NGINX:
 
@@ -220,7 +219,7 @@ certificates do not work with iPads and may cause unexpected issues with
 code-server. You should only proceed with this option if:
 
 - You do not want to buy a domain or you cannot expose the remote machine to
-   the internet
+  the internet
 - You do not want to use port forwarding via SSH
 
 To use a self-signed certificate:
@@ -278,7 +277,7 @@ If you pass a certificate to code-server, it will respond to HTTPS requests and
 redirect all HTTP requests to HTTPS.
 
 > You can use [Let's Encrypt](https://letsencrypt.org/) to get a TLS certificate
-for free.
+> for free.
 
 ### Self Signed Certificate
 
@@ -303,7 +302,7 @@ code-server --proxy-domain <domain>
 ```
 
 Now you can browse to `<port>.<domain>`. Note that this uses the host header, so
-ensure your reverse proxy (if you're using one)  forwards that information.
+ensure your reverse proxy (if you're using one) forwards that information.
 
 ### Using a subpath
 

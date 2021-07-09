@@ -2,14 +2,13 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # npm Install Requirements
 
-- [npm Install Requirements](#npm-install-requirements)
-  - [Node.js version](#nodejs-version)
-  - [Ubuntu, Debian](#ubuntu-debian)
-  - [Fedora, CentOS, RHEL](#fedora-centos-rhel)
-  - [Alpine](#alpine)
-  - [macOS](#macos)
-  - [FreeBSD](#freebsd)
-  - [Issues with Node.js after version upgrades](#issues-with-nodejs-after-version-upgrades)
+- [Node.js version](#nodejs-version)
+- [Ubuntu, Debian](#ubuntu-debian)
+- [Fedora, CentOS, RHEL](#fedora-centos-rhel)
+- [Alpine](#alpine)
+- [macOS](#macos)
+- [FreeBSD](#freebsd)
+- [Issues with Node.js after version upgrades](#issues-with-nodejs-after-version-upgrades)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -77,8 +76,7 @@ directory and running `npm rebuild` to recompile the modules.
 A step-by-step example of how you might do this is:
 
 1. Install code-server: `brew install code-server`
-2. Navigate into the directory: `cd
-   /usr/local/Cellar/code-server/<version>/libexec/lib/vscode/`
+2. Navigate into the directory: `cd /usr/local/Cellar/code-server/<version>/libexec/lib/vscode/`
 3. Recompile the native modules: `npm rebuild`
 4. Restart code-server
 

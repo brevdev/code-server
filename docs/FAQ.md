@@ -2,33 +2,32 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # FAQ
 
-- [FAQ](#faq)
-  - [Questions?](#questions)
-  - [How should I expose code-server to the internet?](#how-should-i-expose-code-server-to-the-internet)
-  - [Can I use code-server on the iPad?](#can-i-use-code-server-on-the-ipad)
-  - [How does the config file work?](#how-does-the-config-file-work)
-  - [How do I make my keyboard shortcuts work?](#how-do-i-make-my-keyboard-shortcuts-work)
-  - [Why can't code-server use Microsoft's extension marketplace?](#why-cant-code-server-use-microsofts-extension-marketplace)
-  - [How can I request an extension that's missing from the marketplace?](#how-can-i-request-an-extension-thats-missing-from-the-marketplace)
-  - [How do I install an extension?](#how-do-i-install-an-extension)
-  - [How do I install an extension manually?](#how-do-i-install-an-extension-manually)
-  - [How do I use my own extensions marketplace?](#how-do-i-use-my-own-extensions-marketplace)
-  - [Where are extensions stored?](#where-are-extensions-stored)
-  - [How can I reuse my VS Code configuration?](#how-can-i-reuse-my-vs-code-configuration)
-  - [How does code-server decide what workspace or folder to open?](#how-does-code-server-decide-what-workspace-or-folder-to-open)
-  - [How do I access my Documents/Downloads/Desktop folders in code-server on macOS?](#how-do-i-access-my-documentsdownloadsdesktop-folders-in-code-server-on-macos)
-  - [How do I direct server-side requests through a proxy?](#how-do-i-direct-server-side-requests-through-a-proxy)
-  - [How do I debug issues with code-server?](#how-do-i-debug-issues-with-code-server)
-  - [What is the healthz endpoint?](#what-is-the-healthz-endpoint)
-  - [What is the heartbeat file?](#what-is-the-heartbeat-file)
-  - [How do I change the password?](#how-do-i-change-the-password)
-  - [Can I store my password hashed?](#can-i-store-my-password-hashed)
-  - [Is multi-tenancy possible?](#is-multi-tenancy-possible)
-  - [Can I use Docker in a code-server container?](#can-i-use-docker-in-a-code-server-container)
-  - [How do I disable telemetry?](#how-do-i-disable-telemetry)
-  - [What's the difference between code-server and Theia?](#whats-the-difference-between-code-server-and-theia)
-  - [What's the difference between code-server and VS Code Codespaces?](#whats-the-difference-between-code-server-and-vs-code-codespaces)
-  - [Are there community projects involving code-server?](#are-there-community-projects-involving-code-server)
+- [Questions?](#questions)
+- [How should I expose code-server to the internet?](#how-should-i-expose-code-server-to-the-internet)
+- [Can I use code-server on the iPad?](#can-i-use-code-server-on-the-ipad)
+- [How does the config file work?](#how-does-the-config-file-work)
+- [How do I make my keyboard shortcuts work?](#how-do-i-make-my-keyboard-shortcuts-work)
+- [Why can't code-server use Microsoft's extension marketplace?](#why-cant-code-server-use-microsofts-extension-marketplace)
+- [How can I request an extension that's missing from the marketplace?](#how-can-i-request-an-extension-thats-missing-from-the-marketplace)
+- [How do I install an extension?](#how-do-i-install-an-extension)
+- [How do I install an extension manually?](#how-do-i-install-an-extension-manually)
+- [How do I use my own extensions marketplace?](#how-do-i-use-my-own-extensions-marketplace)
+- [Where are extensions stored?](#where-are-extensions-stored)
+- [How can I reuse my VS Code configuration?](#how-can-i-reuse-my-vs-code-configuration)
+- [How does code-server decide what workspace or folder to open?](#how-does-code-server-decide-what-workspace-or-folder-to-open)
+- [How do I access my Documents/Downloads/Desktop folders in code-server on macOS?](#how-do-i-access-my-documentsdownloadsdesktop-folders-in-code-server-on-macos)
+- [How do I direct server-side requests through a proxy?](#how-do-i-direct-server-side-requests-through-a-proxy)
+- [How do I debug issues with code-server?](#how-do-i-debug-issues-with-code-server)
+- [What is the healthz endpoint?](#what-is-the-healthz-endpoint)
+- [What is the heartbeat file?](#what-is-the-heartbeat-file)
+- [How do I change the password?](#how-do-i-change-the-password)
+- [Can I store my password hashed?](#can-i-store-my-password-hashed)
+- [Is multi-tenancy possible?](#is-multi-tenancy-possible)
+- [Can I use Docker in a code-server container?](#can-i-use-docker-in-a-code-server-container)
+- [How do I disable telemetry?](#how-do-i-disable-telemetry)
+- [What's the difference between code-server and Theia?](#whats-the-difference-between-code-server-and-theia)
+- [What's the difference between code-server and VS Code Codespaces?](#whats-the-difference-between-code-server-and-vs-code-codespaces)
+- [Are there community projects involving code-server?](#are-there-community-projects-involving-code-server)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -63,8 +62,7 @@ The default config defines the following behavior:
 - Enable password authorization
 - Do not use TLS
 
-Each key in the file maps directly to a `code-server` flag (run `code-server
---help` to see a listing of all the flags). Any flags passed to `code-server`
+Each key in the file maps directly to a `code-server` flag (run `code-server --help` to see a listing of all the flags). Any flags passed to `code-server`
 will take priority over the config file.
 
 You can change the config file's location using the `--config` flag or

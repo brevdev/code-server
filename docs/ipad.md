@@ -2,16 +2,15 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # iPad
 
-- [iPad](#ipad)
-  - [Using the code-server progressive web app (PWA)](#using-the-code-server-progressive-web-app-pwa)
-  - [Access code-server with a self-signed certificate on an iPad](#access-code-server-with-a-self-signed-certificate-on-an-ipad)
-    - [Certificate requirements](#certificate-requirements)
-    - [Sharing a self-signed certificate with an iPad](#sharing-a-self-signed-certificate-with-an-ipad)
-  - [Access code-server using Servediter](#access-code-server-using-servediter)
-  - [Raspberry Pi USB-C network](#raspberry-pi-usb-c-network)
-  - [Recommendations](#recommendations)
-  - [Known issues](#known-issues)
-    - [Workaround for issue with `ctrl+c` not stopping a running process in the terminal](#workaround-for-issue-with-ctrlc-not-stopping-a-running-process-in-the-terminal)
+- [Using the code-server progressive web app (PWA)](#using-the-code-server-progressive-web-app-pwa)
+- [Access code-server with a self-signed certificate on an iPad](#access-code-server-with-a-self-signed-certificate-on-an-ipad)
+  - [Certificate requirements](#certificate-requirements)
+  - [Sharing a self-signed certificate with an iPad](#sharing-a-self-signed-certificate-with-an-ipad)
+- [Access code-server using Servediter](#access-code-server-using-servediter)
+- [Raspberry Pi USB-C network](#raspberry-pi-usb-c-network)
+- [Recommendations](#recommendations)
+- [Known issues](#known-issues)
+  - [Workaround for issue with `ctrl+c` not stopping a running process in the terminal](#workaround-for-issue-with-ctrlc-not-stopping-a-running-process-in-the-terminal)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -72,7 +71,7 @@ To share a self-signed certificate with an iPad:
    the certificate's location in its logs:
 
    ```console
-   [2020-10-30T08:55:45.139Z] info    - Using generated certificate and key for HTTPS: ~/.local/share/code-server/mymbp_local.crt
+   [2020-10-30T08:55:45.139Z] info - Using generated certificate and key for HTTPS: ~/.local/share/code-server/mymbp_local.crt
    ```
 
 2. Send the certificate to the iPad, either by emailing it to yourself or using
@@ -173,8 +172,8 @@ and tricks helpful:
   - See [workaround](#ctrl-c-workaround)
 
 Additionally, see [issues in the code-server repo that are tagged with the iPad
-  label](https://github.com/cdr/code-server/issues?q=is%3Aopen+is%3Aissue+label%3AiPad)
-  for more information.
+label](https://github.com/cdr/code-server/issues?q=is%3Aopen+is%3Aissue+label%3AiPad)
+for more information.
 
 ### Workaround for issue with `ctrl+c` not stopping a running process in the terminal
 
@@ -199,4 +198,4 @@ In the meantime, you can manually define a shortcut as a workaround:
    }
    ```
 
-*Source: [StackOverflow](https://stackoverflow.com/a/52735954/3015595)*
+_Source: [StackOverflow](https://stackoverflow.com/a/52735954/3015595)_

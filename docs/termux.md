@@ -2,12 +2,11 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # Termux
 
-- [Termux](#termux)
-  - [Install](#install)
-  - [Upgrade](#upgrade)
-  - [Known Issues](#known-issues)
-    - [Search doesn't work](#search-doesnt-work)
-    - [Backspace doesn't work](#backspace-doesnt-work)
+- [Install](#install)
+- [Upgrade](#upgrade)
+- [Known Issues](#known-issues)
+  - [Search doesn't work](#search-doesnt-work)
+  - [Backspace doesn't work](#backspace-doesnt-work)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -67,6 +66,6 @@ There are two workarounds.
 
 The backspace button should work at this point.
 
-*Thanks to @Nefomemes for the [suggestion](https://github.com/cdr/code-server/issues/1141#issuecomment-789463707)!*
+_Thanks to @Nefomemes for the [suggestion](https://github.com/cdr/code-server/issues/1141#issuecomment-789463707)!_
 
 **Option 2:** Use a Bluetooth keyboard.

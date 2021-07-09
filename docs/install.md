@@ -2,37 +2,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # Install
 
-<<<<<<< HEAD
-- [Install](#install)
-  - [install.sh](#installsh)
-    - [Detection reference](#detection-reference)
-  - [yarn, npm](#yarn-npm)
-  - [Standalone releases](#standalone-releases)
-  - [Debian, Ubuntu](#debian-ubuntu)
-  - [Fedora, CentOS, RHEL, SUSE](#fedora-centos-rhel-suse)
-  - [Arch Linux](#arch-linux)
-  - [macOS](#macos)
-  - [Docker](#docker)
-  - [Helm](#helm)
-  - [Raspberry Pi](#raspberry-pi)
-  - [Termux](#termux)
-  - [Cloud providers](#cloud-providers)
-=======
-- [Install](#install)
-  - [install.sh](#installsh)
-    - [Detection reference](#detection-reference)
-  - [yarn, npm](#yarn-npm)
-  - [Standalone releases](#standalone-releases)
-  - [Debian, Ubuntu](#debian-ubuntu)
-  - [Fedora, CentOS, RHEL, SUSE](#fedora-centos-rhel-suse)
-  - [Arch Linux](#arch-linux)
-  - [macOS](#macos)
-  - [Docker](#docker)
-  - [Helm](#helm)
-  - [Raspberry Pi](#raspberry-pi)
-  - [Termux](#termux)
-  - [Cloud providers](#cloud-providers)
->>>>>>> main
+- [install.sh](#installsh)
+  - [Detection reference](#detection-reference)
+- [yarn, npm](#yarn-npm)
+- [Standalone releases](#standalone-releases)
+- [Debian, Ubuntu](#debian-ubuntu)
+- [Fedora, CentOS, RHEL, SUSE](#fedora-centos-rhel-suse)
+- [Arch Linux](#arch-linux)
+- [macOS](#macos)
+- [Docker](#docker)
+- [Helm](#helm)
+- [Raspberry Pi](#raspberry-pi)
+- [Termux](#termux)
+- [Cloud providers](#cloud-providers)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

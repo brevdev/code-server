@@ -2,20 +2,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 # Contributing
 
-- [Contributing](#contributing)
-  - [Requirements](#requirements)
-  - [Creating pull requests](#creating-pull-requests)
-    - [Commits and commit history](#commits-and-commit-history)
-  - [Development workflow](#development-workflow)
-    - [Update VS Code](#update-vs-code)
-    - [Build](#build)
-    - [Test](#test)
-    - [Unit tests](#unit-tests)
-    - [Integration Tests](#integration-tests)
-    - [End-to-end tests](#end-to-end-tests)
-  - [Structure](#structure)
-    - [Modifying VS Code](#modifying-vs-code)
-    - [Currently Known Issues](#currently-known-issues)
+- [Requirements](#requirements)
+- [Creating pull requests](#creating-pull-requests)
+  - [Commits and commit history](#commits-and-commit-history)
+- [Development workflow](#development-workflow)
+  - [Update VS Code](#update-vs-code)
+  - [Build](#build)
+  - [Test](#test)
+  - [Unit tests](#unit-tests)
+  - [Integration Tests](#integration-tests)
+  - [End-to-end tests](#end-to-end-tests)
+- [Structure](#structure)
+  - [Modifying VS Code](#modifying-vs-code)
+  - [Currently Known Issues](#currently-known-issues)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -75,8 +74,7 @@ yarn watch
 
 ### Update VS Code
 
-Updating VS Code requires `git subtree`. On some RPM-based Linux distros, `git
-subtree` is not included by default and needs to be installed separately. To
+Updating VS Code requires `git subtree`. On some RPM-based Linux distros, `git subtree` is not included by default and needs to be installed separately. To
 install, run `dnf install git-subtree` or `yum install git-subtree`.
 
 To update VS Code:
