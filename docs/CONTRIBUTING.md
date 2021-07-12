@@ -49,7 +49,7 @@ There are several differences, however. Here is what is needed:
   - used to build code-server releases
 - [`gnupg`](https://gnupg.org/index.html)
   - all commits must be signed and verified
-  - see GitHub's ["Managing commit signature verification"](https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification) or follow [this tutorial](https://joeprevite.com/verify-commits-on-github)
+  - see GitHub's ["Managings commit signature verification"](https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification) or follow [this tutorial](https://joeprevite.com/verify-commits-on-github)
 - `build-essential` (Linux)
   - `apt-get install -y build-essential` - used by VS Code
 - `rsync` and `unzip`

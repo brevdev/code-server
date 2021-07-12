@@ -14,21 +14,26 @@ export const router = Router()
  *
  * For example if `coder.com` is specified `8080.coder.com` will be proxied
  * but `8080.test.coder.com` and `test.8080.coder.com` will not.
+ *
+ * This example changes to `coder.com`, `8080-coder.com` if the user sets
+ * the proxy port separator to be a dash.
  */
 const maybeProxy = (req: Request): string | undefined => {
   // Split into parts.
   const host = req.headers.host || ""
   const idx = host.indexOf(":")
   const domain = idx !== -1 ? host.substring(0, idx) : host
-  const parts = domain.split(".")
+  const separator = req.args["proxy-port-separator"]
+  const parts = domain.split(separator)
 
   // There must be an exact match.
   const port = parts.shift()
-  const proxyDomain = parts.join(".")
+  const proxyDomain = parts.join(separator)
   if (!port || !req.args["proxy-domain"].includes(proxyDomain)) {
     return undefined
   }
 
+  console.log(">>>>>> PORT", port)
   return port
 }
 
