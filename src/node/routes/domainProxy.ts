@@ -33,7 +33,6 @@ const maybeProxy = (req: Request): string | undefined => {
     return undefined
   }
 
-  console.log(">>>>>> PORT", port)
   return port
 }
 
