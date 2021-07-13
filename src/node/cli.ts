@@ -56,7 +56,7 @@ export interface Args extends VsArgs {
   "show-versions"?: boolean
   "uninstall-extension"?: string[]
   "proxy-domain"?: string[]
-  "proxy-port-separator"?: string
+  "proxy-port-separator"?: string // "dot" | "dash"
   locale?: string
   _: string[]
   "reuse-window"?: boolean
@@ -181,10 +181,7 @@ const options: Options<Required<Args>> = {
   "uninstall-extension": { type: "string[]", description: "Uninstall a VS Code extension by id." },
   "show-versions": { type: "boolean", description: "Show VS Code extension versions." },
   "proxy-domain": { type: "string[]", description: "Domain used for proxying ports." },
-  "proxy-port-separator": {
-    type: "string",
-    description: "Seperator used when retrieving the port from the proxy url",
-  },
+  "proxy-port-separator": { type: "string", description: "Separator used to retrieve port in url for routing" },
   "ignore-last-opened": {
     type: "boolean",
     short: "e",
@@ -392,7 +389,7 @@ export interface DefaultedArgs extends ConfigArgs {
   host: string
   port: number
   "proxy-domain": string[]
-  "proxy-port-separator": string
+  "proxy-port-separator"?: string
   verbose: boolean
   usingEnvPassword: boolean
   usingEnvHashedPassword: boolean
@@ -501,8 +498,10 @@ export async function setDefaults(cliArgs: Args, configArgs?: ConfigArgs): Promi
   const proxyDomains = new Set((args["proxy-domain"] || []).map((d) => d.replace(/^\*\./, "")))
   args["proxy-domain"] = Array.from(proxyDomains)
 
-  // Default separator
-  args["proxy-port-separator"] = "."
+  // Default for proxy
+  if (!args["proxy-port-separator"]) {
+    args["proxy-port-separator"] = "dot"
+  }
 
   return {
     ...args,

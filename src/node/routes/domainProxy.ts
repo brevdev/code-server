@@ -23,7 +23,7 @@ const maybeProxy = (req: Request): string | undefined => {
   const host = req.headers.host || ""
   const idx = host.indexOf(":")
   const domain = idx !== -1 ? host.substring(0, idx) : host
-  const separator = req.args["proxy-port-separator"]
+  const separator = req.args["proxy-port-separator"] === "dash" ? "-" : "."
   const parts = domain.split(separator)
 
   // There must be an exact match.

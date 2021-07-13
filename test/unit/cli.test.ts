@@ -26,7 +26,6 @@ describe("parser", () => {
     host: "localhost",
     port: 8080,
     "proxy-domain": [],
-    "proxy-port-separator": ".",
     usingEnvPassword: false,
     usingEnvHashedPassword: false,
     "extensions-dir": path.join(paths.data, "extensions"),
