@@ -8,7 +8,7 @@ describe("/static", () => {
   let _codeServer: httpserver.HttpServer | undefined
   function codeServer(): httpserver.HttpServer {
     if (!_codeServer) {
-      throw new Error("tried to use code-server before setting it up")
+      throw new Error("tried to use brev-code-server before setting it up")
     }
     return _codeServer
   }
@@ -97,7 +97,7 @@ describe("/static", () => {
 
     commonTests()
 
-    describe("inside code-server root", () => {
+    describe("inside brev-code-server root", () => {
       it("should return a 404 for a nonexistent file", async () => {
         const resp = await codeServer().fetch(`/static/${commit}/${__filename}-does-not-exist`)
         expect(resp.status).toBe(404)
@@ -115,7 +115,7 @@ describe("/static", () => {
       })
     })
 
-    describe("outside code-server root", () => {
+    describe("outside brev-code-server root", () => {
       it("should return a 401 for a nonexistent file", async () => {
         const resp = await codeServer().fetch(`/static/${commit}/${nonExistentTestFile}`)
         expect(resp.status).toBe(401)

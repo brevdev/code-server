@@ -46,8 +46,8 @@ const send = (message: VscodeMessage): void => {
 // Wait for the init message then start up VS Code. Subsequent messages will
 // return new workbench options without starting a new instance.
 process.on('message', async (message: CodeServerMessage, socket) => {
-	logger.debug('got message from code-server', field('type', message.type));
-	logger.trace('code-server message content', field('message', message));
+	logger.debug('got message from brev-code-server', field('type', message.type));
+	logger.trace('brev-code-server message content', field('message', message));
 	switch (message.type) {
 		case 'init':
 			try {

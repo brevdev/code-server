@@ -132,7 +132,7 @@ const options: Options<Required<Args>> = {
   "disable-update-check": {
     type: "boolean",
     description:
-      "Disable update check. Without this flag, code-server checks every 6 hours against the latest github release and \n" +
+      "Disable update check. Without this flag, Brev checks every 6 hours against the latest github release and \n" +
       "then notifies you once every week that a new release is available.",
   },
   // --enable can be used to enable experimental features. These features
@@ -205,8 +205,8 @@ const options: Options<Required<Args>> = {
   link: {
     type: OptionalString,
     description: `
-      Securely bind code-server via our cloud service with the passed name. You'll get a URL like
-      https://hostname-username.cdr.co at which you can easily access your code-server instance.
+      Securely bind Brev via our cloud service with the passed name. You'll get a URL like
+      https://hostname-username.cdr.co at which you can easily access your Brev instance.
       Authorization is done via GitHub.
     `,
     beta: true,

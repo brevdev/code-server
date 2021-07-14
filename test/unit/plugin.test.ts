@@ -82,7 +82,7 @@ describe("plugin", () => {
           modulePath: path.join(__dirname, "test-plugin"),
 
           displayName: "Test Plugin",
-          description: "Plugin used in code-server tests.",
+          description: "Plugin used in brev-code-server tests.",
           routerPath: "/test-plugin",
           homepageURL: "https://example.com",
         },

@@ -5,7 +5,7 @@ export const plugin: cs.Plugin = {
   displayName: "Test Plugin",
   routerPath: "/test-plugin",
   homepageURL: "https://example.com",
-  description: "Plugin used in code-server tests.",
+  description: "Plugin used in brev-code-server tests.",
 
   init(config) {
     config.logger.debug("test-plugin loaded!")

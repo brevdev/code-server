@@ -54,7 +54,7 @@ jobs:
         run: yarn lint
         if: success()
 
-      - name: Run code-server unit tests
+      - name: Run unit tests
         run: yarn test:unit
         if: success()
 
@@ -370,7 +370,7 @@ jobs:
           name: release-packages
           path: ./release-packages
 
-      - name: Untar code-server release
+      - name: Untar release
         run: |
           cd release-packages
           tar -xzf code-server*-linux-amd64.tar.gz

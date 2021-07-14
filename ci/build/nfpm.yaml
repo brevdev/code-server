@@ -1,14 +1,14 @@
-name: "code-server"
+name: "Brev"
 arch: "${ARCH}"
 platform: "linux"
 version: "v${VERSION}"
 section: "devel"
 priority: "optional"
-maintainer: "Anmol Sethi <hi@nhooyr.io>"
+maintainer: "Ali Ahmed <ali@brev.dev>"
 description: |
-  Run VS Code in the browser.
-vendor: "Coder"
-homepage: "https://github.com/cdr/code-server"
+  VS Code in the browser.
+vendor: "Brev"
+homepage: "https://github.com/brevdev/brev-code-server"
 license: "MIT"
 
 contents:

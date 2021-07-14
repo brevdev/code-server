@@ -83,7 +83,7 @@ export const openInExistingInstance = async (args: DefaultedArgs, socketPath: st
 }
 
 export const runCodeServer = async (args: DefaultedArgs): Promise<http.Server> => {
-  logger.info(`code-server ${version} ${commit}`)
+  logger.info(`brev-code-server ${version} ${commit}`)
 
   logger.info(`Using user-data-dir ${humanPath(args["user-data-dir"])}`)
   logger.trace(`Using extensions-dir ${humanPath(args["extensions-dir"])}`)

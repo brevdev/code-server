@@ -1,4 +1,4 @@
-name: "code-server CodeQL config"
+name: "Brev CodeQL config"
 
 paths-ignore:
   - lib/vscode

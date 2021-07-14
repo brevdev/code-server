@@ -1,5 +1,5 @@
 /**
- * This file describes the code-server plugin API for adding new applications.
+ * This file describes the brev-code-server plugin API for adding new applications.
  */
 import { field, Level, Logger } from "@coder/logger"
 import * as express from "express"
@@ -11,10 +11,10 @@ import Websocket from "ws"
 /**
  * Overlay
  *
- * The homepage of code-server will launch into VS Code. However, there will be an overlay
+ * The homepage of brev-code-server will launch into VS Code. However, there will be an overlay
  * button that when clicked, will show all available applications with their names,
  * icons and provider plugins. When one clicks on an app's icon, they will be directed
- * to <code-server-root>/<plugin-path>/<app-path> to access the application.
+ * to <brev-code-server-root>/<plugin-path>/<app-path> to access the application.
  */
 
 /**
@@ -23,16 +23,16 @@ import Websocket from "ws"
  * Plugins are just node modules that contain a top level export "plugin" that implements
  * the Plugin interface.
  *
- * 1. code-server uses $CS_PLUGIN to find plugins.
+ * 1. brev-code-server uses $CS_PLUGIN to find plugins.
  *
- * e.g. CS_PLUGIN=/tmp/will:/tmp/teffen will cause code-server to load
+ * e.g. CS_PLUGIN=/tmp/will:/tmp/teffen will cause brev-code-server to load
  * /tmp/will and /tmp/teffen as plugins.
  *
- * 2. code-server uses $CS_PLUGIN_PATH to find plugins. Each subdirectory in
- * $CS_PLUGIN_PATH with a package.json where the engine is code-server is
+ * 2. brev-code-server uses $CS_PLUGIN_PATH to find plugins. Each subdirectory in
+ * $CS_PLUGIN_PATH with a package.json where the engine is brev-code-server is
  * a valid plugin.
  *
- * e.g. CS_PLUGIN_PATH=/tmp/nhooyr:/tmp/ash will cause code-server to search
+ * e.g. CS_PLUGIN_PATH=/tmp/nhooyr:/tmp/ash will cause brev-code-server to search
  * /tmp/nhooyr and then /tmp/ash for plugins.
  *
  * CS_PLUGIN_PATH defaults to
@@ -45,7 +45,7 @@ import Websocket from "ws"
  * Plugins are required as soon as they are found and then initialized.
  * See the Plugin interface for details.
  *
- * If two plugins are found with the exact same name, then code-server will
+ * If two plugins are found with the exact same name, then brev-code-server will
  * use the first one and emit a warning.
  *
  */
@@ -74,7 +74,7 @@ import Websocket from "ws"
  *       "version": "1.0.0",
  *       "modulePath": "/Users/nhooyr/src/cdr/code-server/test/test-plugin",
  *       "displayName": "Test Plugin",
- *       "description": "Plugin used in code-server tests.",
+ *       "description": "Plugin used in brev-code-server tests.",
  *       "routerPath": "/test-plugin",
  *       "homepageURL": "https://example.com"
  *     }
@@ -118,12 +118,12 @@ export interface WebsocketRouter {
 export function WsRouter(): WebsocketRouter
 
 /**
- * The websocket server used by code-server.
+ * The websocket server used by brev-code-server.
  */
 export const wss: Websocket.Server
 
 /**
- * The Express import used by code-server.
+ * The Express import used by brev-code-server.
  *
  * Re-exported so plugins don't have to import duplicate copies of Express and
  * to avoid potential version differences or issues caused by running separate
@@ -138,7 +138,7 @@ export { express }
 export { field, Level, Logger }
 
 /**
- * code-server's proxy server.
+ * brev-code-server's proxy server.
  */
 export const proxy: ProxyServer
 
@@ -236,7 +236,7 @@ export interface Plugin {
   wsRouter?(): WebsocketRouter
 
   /**
-   * code-server uses this to collect the list of applications that
+   * brev-code-server uses this to collect the list of applications that
    * the plugin can currently provide.
    * It is called when /api/applications is hit or the overlay needs to
    * refresh the list of applications
@@ -275,10 +275,10 @@ export interface Application {
 
   /**
    * When the user clicks on the icon in the overlay, they will be
-   * redirected to <code-server-root>/<plugin-path>/<app-path>
+   * redirected to <brev-code-server-root>/<plugin-path>/<app-path>
    * where the application should be accessible.
    *
-   * If undefined, then <code-server-root>/<plugin-path> is used.
+   * If undefined, then <brev-code-server-root>/<plugin-path> is used.
    */
   readonly path?: string
 
@@ -286,7 +286,7 @@ export interface Application {
 
   /**
    * The path at which the icon for this application can be accessed.
-   * <code-server-root>/<plugin-path>/<app-path>/<icon-path>
+   * <brev-code-server-root>/<plugin-path>/<app-path>/<icon-path>
    */
   readonly iconPath: string
 

@@ -90,7 +90,7 @@ export const initialize = async (services: ServiceCollection): Promise<void> => 
 	if (!window.isSecureContext) {
 		(services.get(INotificationService) as INotificationService).notify({
 			severity: Severity.Warning,
-			message: 'code-server is being accessed over an insecure domain. Web views, the clipboard, and other functionality will not work as expected.',
+			message: 'Brev is being accessed over an insecure domain. Web views, the clipboard, and other functionality will not work as expected.',
 			actions: {
 				primary: [{
 					id: 'understand',
@@ -141,7 +141,7 @@ export const initialize = async (services: ServiceCollection): Promise<void> => 
 		storageService.store('csLastUpdateNotification', Date.now(), StorageScope.GLOBAL, StorageTarget.MACHINE);
 		(services.get(INotificationService) as INotificationService).notify({
 			severity: Severity.Info,
-			message: `[code-server v${json.latest}](https://github.com/cdr/code-server/releases/tag/v${json.latest}) has been released!`,
+			message: `[brev-code-server v${json.latest}](https://github.com/cdr/code-server/releases/tag/v${json.latest}) has been released!`,
 		});
 	};
 
