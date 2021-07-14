@@ -146,7 +146,7 @@ createWorkspaceFile('', 'tsconfig.json', `{
 		"target": "es6",
 		"outDir": "out",
 		"lib": [
-			"es6"
+      "es2019"
 		],
 		"sourceMap": true,
 		"rootDir": "src",
