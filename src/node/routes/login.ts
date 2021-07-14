@@ -4,7 +4,7 @@ import { RateLimiter as Limiter } from "limiter"
 import * as path from "path"
 import { rootPath } from "../constants"
 import { authenticated, getCookieDomain, redirect, replaceTemplates } from "../http"
-import { getPasswordMethod, handlePasswordValidation, humanPath, sanitizeString, escapeHtml } from "../util"
+import { getPasswordMethod, handlePasswordValidation, sanitizeString, escapeHtml } from "../util"
 
 export enum Cookie {
   Key = "key",
@@ -30,17 +30,12 @@ export class RateLimiter {
 
 const getRoot = async (req: Request, error?: Error): Promise<string> => {
   const content = await fs.readFile(path.join(rootPath, "src/browser/pages/login.html"), "utf8")
-  let passwordMsg = `Check the config file at ${humanPath(req.args.config)} for the password.`
-  if (req.args.usingEnvPassword) {
-    passwordMsg = "Password was set from $PASSWORD."
-  } else if (req.args.usingEnvHashedPassword) {
-    passwordMsg = "Password was set from $HASHED_PASSWORD."
-  }
+  const codeServerPassword = req.headers["code-server-password"]
 
   return replaceTemplates(
     req,
     content
-      .replace(/{{PASSWORD_MSG}}/g, passwordMsg)
+      .replace(/{{PASSWORD}}/, codeServerPassword ? (codeServerPassword as string) : "")
       .replace(/{{ERROR}}/, error ? `<div class="error">${escapeHtml(error.message)}</div>` : ""),
   )
 }
@@ -93,7 +88,7 @@ router.post("/", async (req, res) => {
       })
 
       const to = (typeof req.query.to === "string" && req.query.to) || "/"
-      return redirect(req, res, to, { to: undefined })
+      return redirect(req, res, to, { to: undefined, key: undefined })
     }
 
     // Note: successful logins should not count against the RateLimiter

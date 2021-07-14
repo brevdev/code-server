@@ -80,18 +80,16 @@ export const getOptions = <T extends Options>(): T => {
   // You can also pass options in stringified form to the options query
   // variable. Options provided here will override the ones in the options
   // element.
-  const params = new URLSearchParams(location.search)
-  const queryOpts = params.get("options")
-  if (queryOpts) {
-    options = {
-      ...options,
-      ...JSON.parse(queryOpts),
-    }
+  const urlSearchParams = new URLSearchParams(location.search)
+  const params = Object.fromEntries(urlSearchParams.entries())
+  const queryOpts = params["options"]
+  options = {
+    ...options,
+    ...(queryOpts ? { queryOpts: JSON.parse(queryOpts) } : {}),
   }
 
   options.base = resolveBase(options.base)
   options.csStaticBase = resolveBase(options.csStaticBase)
-
   return options
 }
 
