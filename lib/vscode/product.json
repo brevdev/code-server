@@ -1,7 +1,7 @@
 {
-	"nameShort": "code-server",
-	"nameLong": "code-server",
-	"applicationName": "code-oss",
+	"nameShort": "Brev",
+	"nameLong": "Brev",
+	"applicationName": "brev-oss",
 	"dataFolderName": ".vscode-oss",
 	"win32MutexName": "vscodeoss",
 	"licenseName": "MIT",
