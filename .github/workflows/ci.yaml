@@ -63,35 +63,35 @@ jobs:
       #   if: success()
 
   # audit-ci:
-    name: Run audit-ci
-    needs: prebuild
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+  #   name: Run audit-ci
+  #   needs: prebuild
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v2
 
-      - name: Install Node.js v14
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
+  #     - name: Install Node.js v14
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "14"
 
-      - name: Fetch dependencies from cache
-        id: cache-yarn
-        uses: actions/cache@v2
-        with:
-          path: "**/node_modules"
-          key: yarn-build-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            yarn-build-
+  #     - name: Fetch dependencies from cache
+  #       id: cache-yarn
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: "**/node_modules"
+  #         key: yarn-build-${{ hashFiles('**/yarn.lock') }}
+  #         restore-keys: |
+  #           yarn-build-
 
-      - name: Install dependencies
-        if: steps.cache-yarn.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
+  #     - name: Install dependencies
+  #       if: steps.cache-yarn.outputs.cache-hit != 'true'
+  #       run: yarn --frozen-lockfile
 
-      - name: Audit for vulnerabilities
-        run: yarn _audit
-        if: success()
+  #     - name: Audit for vulnerabilities
+  #       run: yarn _audit
+  #       if: success()
 
   build:
     name: Build
