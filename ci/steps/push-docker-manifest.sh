@@ -18,20 +18,20 @@ main() {
   # in order to build the manifest.
   # We don't put the arch in the tag to avoid polluting the main repository.
   # These other repositories are private so they don't pollute our organization namespace.
-  docker push "codercom/code-server-amd64:$VERSION"
-  docker push "codercom/code-server-arm64:$VERSION"
+  docker push "brevdev/code-server-amd64:$VERSION"
+  docker push "brevdev/code-server-arm64:$VERSION"
 
   export DOCKER_CLI_EXPERIMENTAL=enabled
 
-  docker manifest create "codercom/code-server:$VERSION" \
-    "codercom/code-server-amd64:$VERSION" \
-    "codercom/code-server-arm64:$VERSION"
-  docker manifest push --purge "codercom/code-server:$VERSION"
+  docker manifest create "brevdev/code-server:$VERSION" \
+    "brevdev/code-server-amd64:$VERSION" \
+    "brevdev/code-server-arm64:$VERSION"
+  docker manifest push --purge "brevdev/code-server:$VERSION"
 
-  docker manifest create "codercom/code-server:latest" \
-    "codercom/code-server-amd64:$VERSION" \
-    "codercom/code-server-arm64:$VERSION"
-  docker manifest push --purge "codercom/code-server:latest"
+  docker manifest create "brevdev/code-server:latest" \
+    "brevdev/code-server-amd64:$VERSION" \
+    "brevdev/code-server-arm64:$VERSION"
+  docker manifest push --purge "brevdev/code-server:latest"
 }
 
 main "$@"

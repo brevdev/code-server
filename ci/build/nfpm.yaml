@@ -8,7 +8,7 @@ maintainer: "Ali Ahmed <ali@brev.dev>"
 description: |
   VS Code in the browser.
 vendor: "Brev"
-homepage: "https://github.com/brevdev/brev-code-server"
+homepage: "https://github.com/brevdev/code-server"
 license: "MIT"
 
 contents:

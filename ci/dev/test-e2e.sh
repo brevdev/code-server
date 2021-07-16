@@ -19,7 +19,7 @@ main() {
   # Simple sanity checks to see that we've built. There could still be things
   # wrong (native modules version issues, incomplete build, etc).
   if [[ ! -d $dir/out ]]; then
-    echo >&2 "No brev-code-server build detected"
+    echo >&2 "No code-server build detected"
     echo >&2 "You can build it with 'yarn build' or 'yarn watch'"
     exit 1
   fi

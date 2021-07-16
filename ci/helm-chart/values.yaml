@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: codercom/code-server
+  repository: brevdev/code-server
   tag: '3.10.2'
   pullPolicy: Always
 
