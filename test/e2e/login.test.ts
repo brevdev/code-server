@@ -1,5 +1,5 @@
-import { PASSWORD } from "../utils/constants";
-import { describe, expect, test } from "./baseFixture";
+import { PASSWORD } from "../utils/constants"
+import { describe, expect, test } from "./baseFixture"
 
 describe("login", false, () => {
   test("should see the login page", async ({ codeServerPage }) => {
