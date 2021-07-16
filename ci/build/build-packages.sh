@@ -17,11 +17,10 @@ main() {
   mkdir -p release-packages
 
   release_archive
-  release_nfpm
 
-  # if [[ $OS == "linux" ]]; then
-  #   release_nfpm
-  # fi
+  if [[ $OS == "linux" ]]; then
+    release_nfpm
+  fi
 }
 
 release_archive() {
