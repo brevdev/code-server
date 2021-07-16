@@ -33,6 +33,7 @@ main() {
   doctoc --title '# Termux' docs/termux.md > /dev/null
 
   if [[ ${CI-} && $(git ls-files --other --modified --exclude-standard) ]]; then
+    echo "$CI"
     echo "Files need generation or are formatted incorrectly:"
     git -c color.ui=always status | grep --color=no '\[31m'
     echo "Please run the following locally:"

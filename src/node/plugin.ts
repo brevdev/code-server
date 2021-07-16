@@ -228,7 +228,8 @@ export class PluginAPI {
     }
     if (!semver.satisfies(version, packageJSON.engines["code-server"])) {
       throw new Error(
-        `plugin range ${q(packageJSON.engines["code-server"])} incompatible` + ` with brev-code-server version ${version}`,
+        `plugin range ${q(packageJSON.engines["code-server"])} incompatible` +
+          ` with brev-code-server version ${version}`,
       )
     }
 
