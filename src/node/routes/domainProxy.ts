@@ -1,4 +1,6 @@
 import { Request, Router } from "express"
+// import * as fs from "fs"
+// import path from "path"
 import { HttpCode, HttpError } from "../../common/http"
 import { normalize } from "../../common/util"
 import { authenticated, ensureAuthenticated, redirect } from "../http"
@@ -41,6 +43,19 @@ router.all("*", async (req, res, next) => {
   if (!port) {
     return next()
   }
+
+  // Check if user has manually opened ports
+  // const root = path.dirname(__dirname)
+  // const openPortsFile = fs.readFileSync(root, "utf-8")
+  // console.log(">>>>>>>>> openPortsFile", openPortsFile)
+  // const openPorts = openPortsFile.split(",")
+  // console.log(">>>>>>>>> openPorts", openPorts)
+  // if (port in openPorts) {
+  //   return next()
+  // }
+
+  // const ROOT = path.join(__dirname, '../../../')
+  // fs.readFileSync(path.join(ROOT, 'build/.cachesalt'))
 
   // Must be authenticated to use the proxy.
   const isAuthenticated = await authenticated(req)
