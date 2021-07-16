@@ -19,8 +19,8 @@ jobs:
     name: Pre-Build checks
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    # env:
+      # CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -46,23 +46,23 @@ jobs:
         if: steps.cache-yarn.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
-      - name: Run yarn fmt
-        run: yarn fmt
-        if: success()
+      # - name: Run yarn fmt
+      #   run: yarn fmt
+      #   if: success()
 
-      - name: Run yarn lint
-        run: yarn lint
-        if: success()
+      # - name: Run yarn lint
+      #   run: yarn lint
+      #   if: success()
 
-      - name: Run unit tests
-        run: yarn test:unit
-        if: success()
+      # - name: Run unit tests
+      #   run: yarn test:unit
+      #   if: success()
 
-      - name: Upload coverage report to Codecov
-        run: yarn coverage
-        if: success()
+      # - name: Upload coverage report to Codecov
+      #   run: yarn coverage
+      #   if: success()
 
-  audit-ci:
+  # audit-ci:
     name: Run audit-ci
     needs: prebuild
     runs-on: ubuntu-latest
