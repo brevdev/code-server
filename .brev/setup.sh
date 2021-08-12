@@ -40,3 +40,6 @@ sudo apt-get install -y jq
 
 #### bats ####
 sudo apt-get install -y bats
+
+#### alias python to python3 ####
+sudo apt install python-is-python3
