@@ -2,7 +2,6 @@ import { logger } from "@coder/logger"
 import { Request, Router } from "express"
 import fs from "fs"
 import yaml from "js-yaml"
-import { WORKSPACE_HOME_DIRECTORY_PATH } from "../../common/constants"
 import { HttpCode, HttpError } from "../../common/http"
 import { normalize } from "../../common/util"
 import { authenticated, redirect } from "../http"
@@ -38,6 +37,38 @@ const maybeProxy = (req: Request): string | undefined => {
   return port
 }
 
+interface PublicPorts {
+  publicPorts: string[]
+  publicPortMappings: { [key: string]: string }
+}
+
+const publicPortsCache: { config: PublicPorts } = {
+  config: {
+    publicPorts: [],
+    publicPortMappings: {},
+  },
+}
+
+export const initPortsCache = async (baseDir: string) => {
+  logger.debug(`searching for public ports ${baseDir}`)
+  logger.debug(`initing ports cache`)
+  await startPortsCacheUpdate(baseDir)
+}
+
+const startPortsCacheUpdate = async (baseDir: string) => {
+  await getAndUpdatePortsCache(baseDir)
+  setTimeout(async () => {
+    await startPortsCacheUpdate(baseDir)
+  }, 2000)
+}
+
+const getAndUpdatePortsCache = async (baseDir: string) => {
+  logger.trace(`updating public ports cache`)
+  const [ports, mappings] = await getPublicPorts(baseDir)
+  publicPortsCache.config.publicPorts = ports
+  publicPortsCache.config.publicPortMappings = mappings
+}
+
 /**
  * Returns all ports that have been marked as public, specified in the ports.yaml
  * file in our .brev folder. We recursively search through all ports.yaml files and
@@ -48,9 +79,8 @@ const maybeProxy = (req: Request): string | undefined => {
 const getPublicPorts = async (baseDir: string): Promise<[string[], { [key: string]: string }]> => {
   let portFiles: Array<{ dir: string; file: string }> = []
   try {
-    logger.debug(`Directory path: ${baseDir}`)
     // Recursively search for ports.yaml files
-    portFiles = await FindFiles(baseDir, /ports.yaml/g, 5) // 1 or 2
+    portFiles = await FindFiles(baseDir, /ports.yaml/g, 3, { concurrency: 10 }) // 1 or 2
   } catch (error) {
     if (error) logger.debug(`Error in domain proxy: ${error}`)
     portFiles = []
@@ -85,10 +115,12 @@ const getPublicPorts = async (baseDir: string): Promise<[string[], { [key: strin
     publicPorts = publicPorts.concat(ports)
   }
 
-  global.ports = publicPorts
-  global.portMappings = portMappings
   return [publicPorts, portMappings]
 }
+
+// const publicPortsSearchPath = WORKSPACE_HOME_DIRECTORY_PATH
+// logger.debug(`Public ports search path: ${publicPortsSearchPath}`)
+// initPortsCache("/Users/alecfong/Source/brev/code-server")
 
 router.all("*", async (req, res, next) => {
   const port = maybeProxy(req)
@@ -97,7 +129,10 @@ router.all("*", async (req, res, next) => {
   }
 
   // Must be authenticated or specify port as open to use the proxy.
-  const [publicPorts, portMappings] = await getPublicPorts(WORKSPACE_HOME_DIRECTORY_PATH)
+  const publicPorts = publicPortsCache.config.publicPorts
+  const portMappings = publicPortsCache.config.publicPortMappings
+  console.log(publicPorts)
+
   const portIsPublic = publicPorts.includes(port)
   const isAuthenticated = await authenticated(req)
   if (!isAuthenticated && !portIsPublic) {
@@ -126,9 +161,11 @@ router.all("*", async (req, res, next) => {
     throw new HttpError("Unauthorized", HttpCode.Unauthorized)
   }
 
+  const mappedPort = portMappings[port] ? portMappings[port] : port
+
   proxy.web(req, res, {
     ignorePath: true,
-    target: `http://0.0.0.0:${portMappings[port] ? portMappings[port] : port}${req.originalUrl}`,
+    target: `http://0.0.0.0:${mappedPort}${req.originalUrl}`,
   })
 })
 
@@ -141,15 +178,19 @@ wsRouter.ws("*", async (req, _, next) => {
   }
 
   // Must be authenticated or specify port as open to use the proxy.
-  const [publicPorts, portMappings] = await getPublicPorts(WORKSPACE_HOME_DIRECTORY_PATH)
+  const publicPorts = publicPortsCache.config.publicPorts
+  const portMappings = publicPortsCache.config.publicPortMappings
+
   const portIsPublic = publicPorts.includes(port)
   const isAuthenticated = await authenticated(req)
   if (!isAuthenticated && !portIsPublic) {
     throw new HttpError("Unauthorized", HttpCode.Unauthorized)
   }
 
+  const mappedPort = portMappings[port] ? portMappings[port] : port
+
   proxy.ws(req, req.ws, req.head, {
     ignorePath: true,
-    target: `http://0.0.0.0:${portMappings[port] ? portMappings[port] : port}${req.originalUrl}`,
+    target: `http://0.0.0.0:${mappedPort}${req.originalUrl}`,
   })
 })
