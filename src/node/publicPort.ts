@@ -1,5 +1,6 @@
 import { logger } from "@coder/logger"
 import * as chokidar from "chokidar"
+import fs from "fs"
 import * as joi from "joi"
 import yaml from "js-yaml"
 import picomatch from "picomatch"
@@ -8,7 +9,7 @@ export interface PortFile {
   ports: PortOrPortMapping[]
 }
 const portFileSchema = joi.object({
-  ports: [joi.string()],
+  ports: joi.array().items(joi.string()),
 })
 
 type PortOrPortMapping = Port | PortMapping
@@ -45,7 +46,7 @@ export class PublicPorts {
     })
     watcher.on("add", (relPath) => this.putFile(relPath))
     watcher.on("change", (relPath) => this.putFile(relPath))
-    watcher.on("delete", (relPath) => this.deleteFile(relPath))
+    watcher.on("unlink", (relPath) => this.deleteFile(relPath))
   }
 
   public getPublicPort(portOrAlias: PortOrAlias): Port | null {
@@ -69,7 +70,7 @@ export class PublicPorts {
     return Object.values(this.portFiles).reduce(
       (prevValue, currValue, index, portFiles): PortFile => {
         currValue.ports.forEach((port) => {
-          if (prevValue.ports.includes(port)) {
+          if (!prevValue.ports.includes(port)) {
             prevValue.ports.push(port)
           }
         })
@@ -160,11 +161,26 @@ export class PublicPorts {
   }
 
   private getPublicPortsFromFile(relPath: string): PortFile | null {
-    const yamlData = yaml.load(relPath)
+    let yamlData
+    const path = this.getFullPath(relPath)
+    try {
+      yamlData = yaml.load(fs.readFileSync(path, "utf8"))
+    } catch (e) {
+      logger.warn(path)
+      logger.warn(e.toString())
+      return null
+    }
+
     const res = portFileSchema.validate(yamlData)
-    if (res.error === undefined) {
+    if (res.error !== undefined) {
+      logger.warn(path)
+      logger.warn(res.error.message)
       return null
     }
     return res.value
+  }
+
+  private getFullPath(relPath: string): string {
+    return this.searchPath + "/" + relPath
   }
 }
