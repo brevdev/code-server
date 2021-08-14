@@ -7,7 +7,7 @@ import http from "http"
 import * as path from "path"
 import * as tls from "tls"
 import * as pluginapi from "../../../typings/pluginapi"
-import { WORKSPACE_HOME_DIRECTORY_PATH } from "../../common/constants"
+// import { WORKSPACE_HOME_DIRECTORY_PATH } from "../../common/constants"
 import { HttpCode, HttpError } from "../../common/http"
 import { plural } from "../../common/util"
 import { AuthType, DefaultedArgs } from "../cli"
@@ -52,8 +52,8 @@ export const register = async (
     heart.dispose()
   })
 
-  domainProxy.initPortsCache("/Users/alecfong/Source/brev/code-server")
   // domainProxy.initPortsCache(WORKSPACE_HOME_DIRECTORY_PATH)
+  domainProxy.publicPorts.startWatch("/Users/alecfong/Source/brev")
 
   app.disable("x-powered-by")
   wsApp.disable("x-powered-by")
