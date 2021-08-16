@@ -9,6 +9,7 @@ export interface PortFile {
   ports: PortOrPortMapping[]
 }
 const portFileSchema = joi.object({
+  version: joi.string(),
   ports: joi.array().items(joi.string()),
 })
 
