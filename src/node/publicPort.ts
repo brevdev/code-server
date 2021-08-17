@@ -6,16 +6,19 @@ import yaml from "js-yaml"
 import picomatch from "picomatch"
 
 export interface PortFile {
-  ports: PortOrPortMapping[]
+  version?: string
+  ports?: PortOrPortMapping[]
 }
+
 const portFileSchema = joi.object({
-  version: joi.string(),
-  ports: joi.array().items(joi.string()),
+  version: joi.string().optional(),
+  ports: [joi.array().items(joi.string()), joi.allow(null)],
 })
 
 type PortOrPortMapping = Port | PortMapping
 type PortMapping = string // "PortOrAlias:Port" ex: 9000:8000 or my-server:8080
 type PortOrAlias = Port | Alias
+
 type Alias = string // ex: my-server
 type Port = string // ex: "8000"
 
@@ -70,9 +73,9 @@ export class PublicPorts {
   private mergePortFiles(): PortFile {
     return Object.values(this.portFiles).reduce(
       (prevValue, currValue, index, portFiles): PortFile => {
-        currValue.ports.forEach((port) => {
-          if (!prevValue.ports.includes(port)) {
-            prevValue.ports.push(port)
+        currValue.ports?.forEach((port) => {
+          if (!prevValue.ports?.includes(port)) {
+            prevValue.ports?.push(port)
           }
         })
         return prevValue
@@ -84,7 +87,8 @@ export class PublicPorts {
   }
 
   private portFileToPorts(file: PortFile): Ports {
-    return file.ports.reduce((prevValue: Ports, currValue, index, portFiles): Ports => {
+    if (file.ports === null || file.ports === undefined) return {}
+    return file.ports.reduce((prevValue: Ports, currValue): Ports => {
       const mapping = this.parsePortOrPortMapping(currValue)
       if (mapping === null) {
         return prevValue
@@ -172,6 +176,7 @@ export class PublicPorts {
       return null
     }
 
+    console.log(">>>> yamlData", yamlData)
     const res = portFileSchema.validate(yamlData)
     if (res.error !== undefined) {
       logger.warn(path)
