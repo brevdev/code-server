@@ -30,6 +30,7 @@ interface Ports {
  * Provides a interface for efficiently retrieving modifyiable public ports files
  */
 export class PublicPorts {
+  private watcher?: chokidar.FSWatcher
   private portFiles: { [relPath: string]: PortFile } = {}
   private searchPath: string | undefined = undefined
 
@@ -42,15 +43,21 @@ export class PublicPorts {
   public startWatch(searchPath: string) {
     this.searchPath = searchPath
     logger.debug(`searching for public ports ${this.searchPath}`)
-    const watcher = chokidar.watch([this.portsGlob], {
+    this.watcher = chokidar.watch([this.portsGlob], {
       ignored: this.ignoredGlob,
       cwd: this.searchPath,
       followSymlinks: false,
       depth: this.searchDepth,
     })
-    watcher.on("add", (relPath) => this.putFile(relPath))
-    watcher.on("change", (relPath) => this.putFile(relPath))
-    watcher.on("unlink", (relPath) => this.deleteFile(relPath))
+    this.watcher.on("add", (relPath) => this.putFile(relPath))
+    this.watcher.on("change", (relPath) => this.putFile(relPath))
+    this.watcher.on("unlink", (relPath) => this.deleteFile(relPath))
+  }
+
+  public endWatch() {
+    if (typeof this.watcher !== "undefined") {
+      this.watcher.close().then(() => console.log("watcher closed"))
+    }
   }
 
   public getPublicPort(portOrAlias: PortOrAlias): Port | null {
@@ -176,7 +183,6 @@ export class PublicPorts {
       return null
     }
 
-    console.log(">>>> yamlData", yamlData)
     const res = portFileSchema.validate(yamlData)
     if (res.error !== undefined) {
       logger.warn(path)

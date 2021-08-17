@@ -48,8 +48,10 @@ export const register = async (
       })
     })
   })
+
   server.on("close", () => {
     heart.dispose()
+    domainProxy.publicPorts.endWatch()
   })
 
   domainProxy.publicPorts.startWatch(WORKSPACE_HOME_DIRECTORY_PATH)

@@ -15,6 +15,7 @@ export class Heart {
     const now = Date.now()
     return now - this.lastHeartbeat < this.heartbeatInterval
   }
+
   /**
    * Write to the heartbeat file if we haven't already done so within the
    * timeout and start or reset a timer that keeps running as long as there is
