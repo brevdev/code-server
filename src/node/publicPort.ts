@@ -10,10 +10,12 @@ export interface PortFile {
   ports?: PortOrPortMapping[]
 }
 
-const portFileSchema = joi.object({
-  version: joi.string().optional(),
-  ports: [joi.array().items(joi.string()), joi.allow(null)],
-})
+const portFileSchema = joi
+  .object({
+    version: joi.string().optional(),
+    ports: [joi.array().items(joi.string()), joi.allow(null)],
+  })
+  .allow(null)
 
 type PortOrPortMapping = Port | PortMapping
 type PortMapping = string // "PortOrAlias:Port" ex: 9000:8000 or my-server:8080
@@ -189,7 +191,7 @@ export class PublicPorts {
       logger.warn(res.error.message)
       return null
     }
-    return res.value
+    return res.value || []
   }
 
   private getFullPath(relPath: string): string {
