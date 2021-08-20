@@ -63,7 +63,9 @@ export class PublicPorts {
   }
 
   public getPublicPort(portOrAlias: PortOrAlias): Port | null {
+    logger.trace(`portOrAlias: ${portOrAlias}`)
     const ports = this.getPublicPorts()
+    logger.trace(`ports: ${JSON.stringify(ports)}`)
     if (ports[portOrAlias] !== undefined) {
       return ports[portOrAlias]
     } else {
@@ -76,10 +78,12 @@ export class PublicPorts {
       throw new Error("searchPath not defined -- startWatch not yet called")
     }
     const mergedPorts = this.mergePortFiles()
+    logger.trace(`mergedPorts: ${JSON.stringify(mergedPorts)}`)
     return this.portFileToPorts(mergedPorts)
   }
 
   private mergePortFiles(): PortFile {
+    logger.trace(`this.portFiles: ${JSON.stringify(this.portFiles)}`)
     return Object.values(this.portFiles).reduce(
       (prevValue, currValue, index, portFiles): PortFile => {
         currValue.ports?.forEach((port) => {
@@ -153,11 +157,12 @@ export class PublicPorts {
       return
     }
     const publicPorts = this.getPublicPortsFromFile(relPath)
+    logger.trace(`publicPorts: ${JSON.stringify(publicPorts)}`)
     if (publicPorts === null) {
       logger.warn(`malformed ports file ${relPath}`)
       return
     }
-    logger.debug(`puting ports file ${relPath}`)
+    logger.debug(`storing ports file ${relPath}`)
     this.portFiles[relPath] = publicPorts
   }
 
@@ -186,12 +191,15 @@ export class PublicPorts {
     }
 
     const res = portFileSchema.validate(yamlData)
+    logger.trace(`res: ${JSON.stringify(res)}`)
+    logger.trace(`res.error: ${JSON.stringify(res.error)}`)
     if (res.error !== undefined) {
       logger.warn(path)
       logger.warn(res.error.message)
-      return null
+      return { ports: [] }
     }
-    return res.value || []
+    logger.trace(`res.value: ${JSON.stringify(res.value)}`)
+    return res.value || { ports: [] }
   }
 
   private getFullPath(relPath: string): string {
