@@ -550,6 +550,7 @@ export async function readConfigFile(configPath?: string): Promise<ConfigArgs> {
     })
     logger.info(`Wrote default config file to ${humanPath(configPath)}`)
   } catch (error) {
+    logger.info(`Detected existing config file at ${humanPath(configPath)}`)
     // EEXIST is fine; we don't want to overwrite existing configurations.
     if (error.code !== "EEXIST") {
       throw error
