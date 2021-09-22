@@ -1,7 +1,7 @@
 import { logger } from "@coder/logger"
 import * as chokidar from "chokidar"
 import fs from "fs"
-import * as joi from "joi"
+import joi from "joi"
 import yaml from "js-yaml"
 import picomatch from "picomatch"
 
@@ -39,7 +39,7 @@ export class PublicPorts {
   public constructor(
     private readonly portsGlob: string = "**/.brev/ports.y*ml",
     private readonly ignoredGlob: string = "**/node_modules**",
-    private readonly searchDepth: number = 100,
+    private readonly searchDepth: number = 50,
   ) {}
 
   public startWatch(searchPath: string) {
@@ -57,6 +57,7 @@ export class PublicPorts {
   }
 
   public endWatch() {
+    logger.debug("Ending watch for public ports")
     if (typeof this.watcher !== "undefined") {
       this.watcher.close().then(() => console.log("watcher closed"))
     }
@@ -186,7 +187,7 @@ export class PublicPorts {
       yamlData = yaml.load(fs.readFileSync(path, "utf8"))
     } catch (e) {
       logger.warn(path)
-      logger.warn(e.toString())
+      logger.warn(JSON.stringify(e))
       return null
     }
 
