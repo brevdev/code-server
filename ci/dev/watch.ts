@@ -8,7 +8,7 @@ async function main(): Promise<void> {
   try {
     const watcher = new Watcher()
     await watcher.watch()
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.message)
     process.exit(1)
   }
