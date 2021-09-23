@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
     (async () => {
       try {
         return await vscode.initialize({ args: req.args, remoteAuthority: req.headers.host || "" }, req.query)
-      } catch (error) {
+      } catch (error: any) {
         const devMessage = isDevMode ? "It might not have finished compiling." : ""
         throw new Error(`VS Code failed to load. ${devMessage} ${error.message}`)
       }

@@ -56,12 +56,14 @@ export interface Args extends VsArgs {
   "show-versions"?: boolean
   "uninstall-extension"?: string[]
   "proxy-domain"?: string[]
+  "proxy-port-separator"?: string // "dot" | "dash"
   locale?: string
   _: string[]
   "reuse-window"?: boolean
   "new-window"?: boolean
-
   link?: OptionalString
+  polling?: boolean
+  "polling-interval"?: number
 }
 
 interface Option<T> {
@@ -185,6 +187,7 @@ const options: Options<Required<Args>> = {
     short: "e",
     description: "Ignore the last opened directory or workspace in favor of an empty window.",
   },
+  "proxy-port-separator": { type: "string", description: "Separator used to retrieve port in url for routing" },
   "new-window": {
     type: "boolean",
     short: "n",
@@ -208,6 +211,14 @@ const options: Options<Required<Args>> = {
       Authorization is done via GitHub.
     `,
     beta: true,
+  },
+  polling: {
+    type: "boolean",
+    description: "Enable polling for chokidar file watcher that detects changes in ports.yaml.",
+  },
+  "polling-interval": {
+    type: "number",
+    description: "Interval for polling. Default is 750ms.",
   },
 }
 
@@ -386,12 +397,16 @@ export interface DefaultedArgs extends ConfigArgs {
   }
   host: string
   port: number
+  "disable-telemetry": boolean
   "proxy-domain": string[]
+  "proxy-port-separator": string // "dot" | "dash"
   verbose: boolean
   usingEnvPassword: boolean
   usingEnvHashedPassword: boolean
   "extensions-dir": string
   "user-data-dir": string
+  polling: boolean
+  "polling-interval": number
 }
 
 /**
@@ -495,6 +510,25 @@ export async function setDefaults(cliArgs: Args, configArgs?: ConfigArgs): Promi
   const proxyDomains = new Set((args["proxy-domain"] || []).map((d) => d.replace(/^\*\./, "")))
   args["proxy-domain"] = Array.from(proxyDomains)
 
+  // Default for proxy
+  if (!args["proxy-port-separator"]) {
+    args["proxy-port-separator"] = "dash"
+  }
+
+  // Default disabling telemetry sent to cdr (instead need to reconfigure this for Brev)
+  if (!args["disable-telemetry"]) {
+    args["disable-telemetry"] = true
+  }
+
+  // Default for polling and interval
+  if (!args["polling"]) {
+    args["polling"] = true
+  }
+
+  if (!args["polling-interval"]) {
+    args["polling-interval"] = 750
+  }
+
   return {
     ...args,
     usingEnvPassword,
@@ -507,6 +541,9 @@ async function defaultConfigFile(): Promise<string> {
 auth: password
 password: ${await generatePassword()}
 cert: false
+proxy-port-separator: dash
+disable-telemetry: true
+log: trace
 `
 }
 
@@ -534,7 +571,8 @@ export async function readConfigFile(configPath?: string): Promise<ConfigArgs> {
       flag: "wx", // wx means to fail if the path exists.
     })
     logger.info(`Wrote default config file to ${humanPath(configPath)}`)
-  } catch (error) {
+  } catch (error: any) {
+    logger.info(`Detected existing config file at ${humanPath(configPath)}`)
     // EEXIST is fine; we don't want to overwrite existing configurations.
     if (error.code !== "EEXIST") {
       throw error
@@ -563,7 +601,7 @@ export function parseConfigFile(configFile: string, configPath: string): ConfigA
 
   // We convert the config file into a set of flags.
   // This is a temporary measure until we add a proper CLI library.
-  const configFileArgv = Object.entries(config).map(([optName, opt]) => {
+  const configFileArgv = Object.entries(config as object).map(([optName, opt]) => {
     if (opt === true) {
       return `--${optName}`
     }
@@ -658,7 +696,7 @@ export const shouldOpenInExistingInstance = async (args: Args): Promise<string |
   const readSocketPath = async (): Promise<string | undefined> => {
     try {
       return await fs.readFile(path.join(os.tmpdir(), "vscode-ipc"), "utf8")
-    } catch (error) {
+    } catch (error: any) {
       if (error.code !== "ENOENT") {
         throw error
       }

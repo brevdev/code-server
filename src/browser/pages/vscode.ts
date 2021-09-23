@@ -85,7 +85,7 @@ export function getNlsConfiguration(_document: Document, base: string) {
         const json = await response.json()
         bundles[bundle] = json
         return cb(undefined, json)
-      } catch (error) {
+      } catch (error: any) {
         return cb(error)
       }
     }

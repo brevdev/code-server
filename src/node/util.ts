@@ -157,7 +157,7 @@ export const generatePassword = async (length = 24): Promise<string> => {
 export const hash = async (password: string): Promise<string> => {
   try {
     return await argon2.hash(password)
-  } catch (error) {
+  } catch (error: any) {
     logger.error(error)
     return ""
   }
@@ -172,7 +172,7 @@ export const isHashMatch = async (password: string, hash: string) => {
   }
   try {
     return await argon2.verify(hash, password)
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error)
   }
 }

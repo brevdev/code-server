@@ -6,7 +6,7 @@ import { promises as fs } from "fs"
  */
 export class Heart {
   private heartbeatTimer?: NodeJS.Timeout
-  private heartbeatInterval = 60000
+  private heartbeatInterval = 10000
   public lastHeartbeat = 0
 
   public constructor(private readonly heartbeatPath: string, private readonly isActive: () => Promise<boolean>) {}
@@ -15,6 +15,7 @@ export class Heart {
     const now = Date.now()
     return now - this.lastHeartbeat < this.heartbeatInterval
   }
+
   /**
    * Write to the heartbeat file if we haven't already done so within the
    * timeout and start or reset a timer that keeps running as long as there is
