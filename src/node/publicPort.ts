@@ -4,7 +4,7 @@ import fs from "fs"
 import joi from "joi"
 import yaml from "js-yaml"
 import picomatch from "picomatch"
-import { DefaultedArgs } from "./cli";
+import { DefaultedArgs } from "./cli"
 
 export interface PortFile {
   version?: string
