@@ -543,6 +543,7 @@ password: ${await generatePassword()}
 cert: false
 proxy-port-separator: dash
 disable-telemetry: true
+log: trace
 `
 }
 

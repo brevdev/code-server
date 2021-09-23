@@ -28,6 +28,8 @@ describe("parser", () => {
     "proxy-domain": [],
     "proxy-port-separator": "dash",
     "disable-telemetry": true,
+    polling: true,
+    "polling-interval": 750,
     usingEnvPassword: false,
     usingEnvHashedPassword: false,
     "extensions-dir": path.join(paths.data, "extensions"),
