@@ -54,7 +54,7 @@ export const register = async (
     domainProxy.publicPorts.endWatch()
   })
 
-  domainProxy.publicPorts.startWatch(WORKSPACE_HOME_DIRECTORY_PATH)
+  domainProxy.publicPorts.startWatch(WORKSPACE_HOME_DIRECTORY_PATH, args)
 
   app.disable("x-powered-by")
   wsApp.disable("x-powered-by")

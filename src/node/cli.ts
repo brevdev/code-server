@@ -61,8 +61,9 @@ export interface Args extends VsArgs {
   _: string[]
   "reuse-window"?: boolean
   "new-window"?: boolean
-
   link?: OptionalString
+  polling?: boolean
+  "polling-interval"?: number
 }
 
 interface Option<T> {
@@ -210,6 +211,14 @@ const options: Options<Required<Args>> = {
       Authorization is done via GitHub.
     `,
     beta: true,
+  },
+  polling: {
+    type: "boolean",
+    description: "Enable polling for chokidar file watcher that detects changes in ports.yaml.",
+  },
+  "polling-interval": {
+    type: "number",
+    description: "Interval for polling. Default is 750ms.",
   },
 }
 
@@ -388,6 +397,7 @@ export interface DefaultedArgs extends ConfigArgs {
   }
   host: string
   port: number
+  "disable-telemetry": boolean
   "proxy-domain": string[]
   "proxy-port-separator": string // "dot" | "dash"
   verbose: boolean
@@ -395,6 +405,8 @@ export interface DefaultedArgs extends ConfigArgs {
   usingEnvHashedPassword: boolean
   "extensions-dir": string
   "user-data-dir": string
+  polling: boolean
+  "polling-interval": number
 }
 
 /**
@@ -508,6 +520,15 @@ export async function setDefaults(cliArgs: Args, configArgs?: ConfigArgs): Promi
     args["disable-telemetry"] = true
   }
 
+  // Default for polling and interval
+  if (!args["polling"]) {
+    args["polling"] = true
+  }
+
+  if (!args["polling-interval"]) {
+    args["polling-interval"] = 750
+  }
+
   return {
     ...args,
     usingEnvPassword,
@@ -549,7 +570,7 @@ export async function readConfigFile(configPath?: string): Promise<ConfigArgs> {
       flag: "wx", // wx means to fail if the path exists.
     })
     logger.info(`Wrote default config file to ${humanPath(configPath)}`)
-  } catch (error) {
+  } catch (error: any) {
     logger.info(`Detected existing config file at ${humanPath(configPath)}`)
     // EEXIST is fine; we don't want to overwrite existing configurations.
     if (error.code !== "EEXIST") {
@@ -659,7 +680,7 @@ export const shouldOpenInExistingInstance = async (args: Args): Promise<string |
   const readSocketPath = async (): Promise<string | undefined> => {
     try {
       return await fs.readFile(path.join(os.tmpdir(), "vscode-ipc"), "utf8")
-    } catch (error) {
+    } catch (error: any) {
       if (error.code !== "ENOENT") {
         throw error
       }

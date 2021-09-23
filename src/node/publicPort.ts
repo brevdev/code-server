@@ -1,9 +1,10 @@
 import { logger } from "@coder/logger"
-import * as chokidar from "chokidar"
+import chokidar from "chokidar"
 import fs from "fs"
 import joi from "joi"
 import yaml from "js-yaml"
 import picomatch from "picomatch"
+import { DefaultedArgs } from "./cli";
 
 export interface PortFile {
   version?: string
@@ -42,14 +43,18 @@ export class PublicPorts {
     private readonly searchDepth: number = 50,
   ) {}
 
-  public startWatch(searchPath: string) {
+  public startWatch(searchPath: string, args: DefaultedArgs) {
     this.searchPath = searchPath
     logger.debug(`searching for public ports ${this.searchPath}`)
+    logger.trace(`settings polling: ${args["polling"]}`)
+    logger.trace(`settings polling-interval: ${args["polling-interval"]}`)
     this.watcher = chokidar.watch([this.portsGlob], {
       ignored: this.ignoredGlob,
       cwd: this.searchPath,
       followSymlinks: false,
       depth: this.searchDepth,
+      usePolling: args["polling"],
+      interval: args["polling-interval"],
     })
     this.watcher.on("add", (relPath) => this.putFile(relPath))
     this.watcher.on("change", (relPath) => this.putFile(relPath))
@@ -164,6 +169,7 @@ export class PublicPorts {
       return
     }
     logger.debug(`storing ports file ${relPath}`)
+    logger.trace(`\n\n`)
     this.portFiles[relPath] = publicPorts
   }
 
@@ -184,7 +190,10 @@ export class PublicPorts {
     let yamlData
     const path = this.getFullPath(relPath)
     try {
-      yamlData = yaml.load(fs.readFileSync(path, "utf8"))
+      const f = fs.readFileSync(path, "utf8")
+      logger.trace(`f: ${JSON.stringify(f)}`)
+      yamlData = yaml.load(f)
+      logger.trace(`yamlData: ${JSON.stringify(yamlData)}`)
     } catch (e) {
       logger.warn(path)
       logger.warn(JSON.stringify(e))
