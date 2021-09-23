@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
     (async () => {
       try {
         return await vscode.initialize({ args: req.args, remoteAuthority: req.headers.host || "" }, req.query)
-      } catch (error) {
+      } catch (error: any) {
         const devMessage = isDevMode ? "It might not have finished compiling." : ""
         throw new Error(`VS Code failed to load. ${devMessage} ${error.message}`)
       }
@@ -63,9 +63,10 @@ router.get("/", async (req, res) => {
  * TODO: Might currently be unused.
  */
 router.get("/resource(/*)?", ensureAuthenticated, async (req, res) => {
-  if (typeof req.query.path === "string") {
-    res.set("Content-Type", getMediaMime(req.query.path))
-    res.send(await fs.readFile(pathToFsPath(req.query.path)))
+  const path = getFirstString(req.query.path)
+  if (path) {
+    res.set("Content-Type", getMediaMime(path))
+    res.send(await fs.readFile(pathToFsPath(path)))
   }
 })
 
@@ -73,9 +74,10 @@ router.get("/resource(/*)?", ensureAuthenticated, async (req, res) => {
  * Used by VS Code to load files.
  */
 router.get("/vscode-remote-resource(/*)?", ensureAuthenticated, async (req, res) => {
-  if (typeof req.query.path === "string") {
-    res.set("Content-Type", getMediaMime(req.query.path))
-    res.send(await fs.readFile(pathToFsPath(req.query.path)))
+  const path = getFirstString(req.query.path)
+  if (path) {
+    res.set("Content-Type", getMediaMime(path))
+    res.send(await fs.readFile(pathToFsPath(path)))
   }
 })
 

@@ -7,7 +7,7 @@ export function getPackageJson(relativePath: string): JSONSchemaForNPMPackageJso
   let pkg = {}
   try {
     pkg = require(relativePath)
-  } catch (error) {
+  } catch (error: any) {
     logger.warn(error.message)
   }
 

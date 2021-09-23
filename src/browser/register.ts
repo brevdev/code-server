@@ -11,7 +11,7 @@ export async function registerServiceWorker(): Promise<void> {
       scope: options.base + "/",
     })
     logger.info(`[Service Worker] registered`)
-  } catch (error) {
+  } catch (error: any) {
     logError(logger, `[Service Worker] registration`, error)
   }
 }

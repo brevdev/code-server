@@ -1,11 +1,14 @@
 import { Request, Router } from "express"
 import { HttpCode, HttpError } from "../../common/http"
 import { normalize } from "../../common/util"
-import { authenticated, ensureAuthenticated, redirect } from "../http"
+import { authenticated, redirect } from "../http"
 import { proxy } from "../proxy"
+import { PublicPorts } from "../publicPort"
 import { Router as WsRouter } from "../wsRouter"
 
 export const router = Router()
+
+export const publicPorts = new PublicPorts()
 
 /**
  * Return the port if the request should be proxied. Anything that ends in a
@@ -20,11 +23,12 @@ const maybeProxy = (req: Request): string | undefined => {
   const host = req.headers.host || ""
   const idx = host.indexOf(":")
   const domain = idx !== -1 ? host.substring(0, idx) : host
-  const parts = domain.split(".")
+  const separator = req.args["proxy-port-separator"] === "dash" ? "-" : "."
+  const parts = domain.split(separator)
 
   // There must be an exact match.
   const port = parts.shift()
-  const proxyDomain = parts.join(".")
+  const proxyDomain = parts.join(separator)
   if (!port || !req.args["proxy-domain"].includes(proxyDomain)) {
     return undefined
   }
@@ -32,15 +36,21 @@ const maybeProxy = (req: Request): string | undefined => {
   return port
 }
 
+// const publicPortsSearchPath = WORKSPACE_HOME_DIRECTORY_PATH
+// logger.debug(`Public ports search path: ${publicPortsSearchPath}`)
+// initPortsCache("/Users/alecfong/Source/brev/code-server")
+
 router.all("*", async (req, res, next) => {
   const port = maybeProxy(req)
   if (!port) {
     return next()
   }
 
-  // Must be authenticated to use the proxy.
+  const foundPublicPort = publicPorts.getPublicPort(port)
+  const portIsPublic = foundPublicPort !== null
+
   const isAuthenticated = await authenticated(req)
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !portIsPublic) {
     // Let the assets through since they're used on the login page.
     if (req.path.startsWith("/static/") && req.method === "GET") {
       return next()
@@ -66,9 +76,11 @@ router.all("*", async (req, res, next) => {
     throw new HttpError("Unauthorized", HttpCode.Unauthorized)
   }
 
+  const mappedPort = foundPublicPort !== null ? foundPublicPort : port
+
   proxy.web(req, res, {
     ignorePath: true,
-    target: `http://0.0.0.0:${port}${req.originalUrl}`,
+    target: `http://0.0.0.0:${mappedPort}${req.originalUrl}`,
   })
 })
 
@@ -80,11 +92,18 @@ wsRouter.ws("*", async (req, _, next) => {
     return next()
   }
 
-  // Must be authenticated to use the proxy.
-  await ensureAuthenticated(req)
+  const foundPublicPort = publicPorts.getPublicPort(port)
+  const portIsPublic = foundPublicPort !== null
+
+  const isAuthenticated = await authenticated(req)
+  if (!isAuthenticated && !portIsPublic) {
+    throw new HttpError("Unauthorized", HttpCode.Unauthorized)
+  }
+
+  const mappedPort = foundPublicPort !== null ? foundPublicPort : port
 
   proxy.ws(req, req.ws, req.head, {
     ignorePath: true,
-    target: `http://0.0.0.0:${port}${req.originalUrl}`,
+    target: `http://0.0.0.0:${mappedPort}${req.originalUrl}`,
   })
 })

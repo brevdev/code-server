@@ -44,7 +44,7 @@ export const createApp = async (args: DefaultedArgs): Promise<[Express, Express,
     if (args.socket) {
       try {
         await fs.unlink(args.socket)
-      } catch (error) {
+      } catch (error: any) {
         if (error.code !== "ENOENT") {
           logger.error(error.message)
         }

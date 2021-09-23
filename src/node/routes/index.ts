@@ -7,6 +7,7 @@ import http from "http"
 import * as path from "path"
 import * as tls from "tls"
 import * as pluginapi from "../../../typings/pluginapi"
+import { WORKSPACE_HOME_DIRECTORY_PATH } from "../../common/constants"
 import { HttpCode, HttpError } from "../../common/http"
 import { plural } from "../../common/util"
 import { AuthType, DefaultedArgs } from "../cli"
@@ -43,13 +44,17 @@ export const register = async (
           return reject(error)
         }
         logger.debug(plural(count, `${count} active connection`))
-        resolve(count > 0)
+        resolve(count > 1) // hack to make heart beat more resilient/accurate with vscode since vscode always opens at least 2 connections
       })
     })
   })
+
   server.on("close", () => {
     heart.dispose()
+    domainProxy.publicPorts.endWatch()
   })
+
+  domainProxy.publicPorts.startWatch(WORKSPACE_HOME_DIRECTORY_PATH, args)
 
   app.disable("x-powered-by")
   wsApp.disable("x-powered-by")
