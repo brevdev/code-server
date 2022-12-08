@@ -100,7 +100,7 @@
     "picomatch": "^2.3.0",
     "proxy-agent": "^5.0.0",
     "proxy-from-env": "^1.1.0",
-    "qs": "6.10.1",
+    "qs": "6.10.3",
     "rotating-file-stream": "^2.1.1",
     "safe-buffer": "^5.1.1",
     "safe-compare": "^1.1.4",
